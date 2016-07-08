@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dudream.mq.processor.dao.DemoDao">
+
+    <insert id="addDemo" parameterType="com.dudream.mq.processor.model.Demo">
+        INSERT INTO
+        demo(id, name)
+        VALUES(#{id}, #{name});
+    </insert>
+
+    <select id="getDemo" parameterType="int"
+            resultType="com.dudream.mq.processor.model.Demo">
+        SELECT id, name FROM demo WHERE id=#{id};
+    </select>
+
+</mapper>
+
+<!--
+建表语句:
+CREATE DATABASES demo;
+CREATE TABLE `demo`.`demo` (
+  `id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-->
