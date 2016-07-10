@@ -4,15 +4,29 @@
 
 <mapper namespace="com.dudream.mq.processor.dao.DemoDao">
 
+    <sql id="TABLE">
+        demo
+    </sql>
+    <sql id="FIELDS">
+        `id`,`name`
+    </sql>
+    <sql id="INSERT_FIELDS">
+        `name`
+    </sql>
+
     <insert id="addDemo" parameterType="com.dudream.mq.processor.model.Demo">
-        INSERT INTO
-        demo(id, name)
-        VALUES(#{id}, #{name});
+        INSERT INTO <include refid="TABLE"/>
+        (<include refid="INSERT_FIELDS"/>)
+        VALUES(#{name});
     </insert>
 
     <select id="getDemo" parameterType="int"
             resultType="com.dudream.mq.processor.model.Demo">
-        SELECT id, name FROM demo WHERE id=#{id};
+        SELECT
+        <include refid="INSERT_FIELDS"/>
+        FROM
+        <include refid="TABLE"/>
+        WHERE id=#{id};
     </select>
 
 </mapper>
@@ -21,7 +35,7 @@
 建表语句:
 CREATE DATABASES demo;
 CREATE TABLE `demo`.`demo` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

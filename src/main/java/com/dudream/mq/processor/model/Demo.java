@@ -6,6 +6,9 @@ public class Demo {
 
     private String name;
 
+    public Demo() {
+    }
+
     public Demo(Integer id, String name) {
         this.id = id;
         this.name = name;

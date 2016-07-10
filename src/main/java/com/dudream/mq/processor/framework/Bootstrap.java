@@ -1,19 +1,38 @@
 package com.dudream.mq.processor.framework;
 
-import com.dudream.mq.processor.service.DemoService;
-import org.springframework.context.ApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ * 启动程序
+ */
 public class Bootstrap {
 
-    public static void main(String[] args) {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("ctx-processor.xml");
+    private static final Logger LOG = LoggerFactory.getLogger(Bootstrap.class);
 
-        DemoService service = ctx.getBean(DemoService.class);
-
-        System.out.println(service.getDemo(1).getName());
+    public void start() throws Exception {
+        LOG.info("Processor.start()");
+        new ClassPathXmlApplicationContext(new String[] { "ctx-processor.xml" });
+        LOG.info("Processor.start() end");
     }
 
+    public void run() throws InterruptedException {
+        while (true) {
+            Thread.sleep(Long.MAX_VALUE);
+        }
+    }
 
+    public static void main(String[] args) {
+        LOG.info("Processor starting...");
+        Bootstrap m = new Bootstrap();
+        try {
+            m.start();
+            m.run();
+            LOG.info("Processor started.");
+        } catch (Exception e) {
+            LOG.error("Processor start error ", e);
+        }
+    }
 
 }

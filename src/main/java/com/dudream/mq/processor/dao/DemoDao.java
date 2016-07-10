@@ -4,8 +4,8 @@ import com.dudream.mq.processor.model.Demo;
 
 public interface DemoDao {
 
-    public int addDemo(Demo demo);
+    int addDemo(Demo demo);
 
-    public Demo getDemo(Integer id);
+    Demo getDemo(Integer id);
 
 }

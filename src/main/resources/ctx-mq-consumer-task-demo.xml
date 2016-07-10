@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	   xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="ctx-mq-base.xml" />
+
+	<!-- declare mq queue of demo task -->
+	<rabbit:queue name="${rabbitmq.demo.queue}" durable="true" auto-delete="false" exclusive="false" />
+
+	<!-- declare mq listener container of demo task -->
+	<rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual" prefetch="${rabbitmq.demo.prefetch}"
+		   concurrency="${rabbitmq.demo.concurrency}">
+		<rabbit:listener queues="${rabbitmq.demo.queue}" ref="demoListener"/>
+	</rabbit:listener-container>
+
+	<!-- declare mq listener of demo task -->
+	<bean id="demoListener" class="com.dudream.mq.processor.framework.task.DemoTask" >
+		<property name="jsonMessageConverter" ref="jsonMessageConverter" />
+	</bean>
+
+</beans>
